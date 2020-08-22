@@ -1,0 +1,11 @@
+[
+null,
+{"id":1,"animationId":6,"description":"It's imbued in Reid's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":96,"name":"Reid Sword","note":"<equipActor: 1 1>","params":[0,0,18,0,0,0,0,0],"price":0,"wtypeId":2},
+{"id":2,"animationId":6,"description":"It's imbued in Priscilla's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":96,"name":"Priscilla Sword","note":"<equipActor: 2>","params":[0,0,8,5,0,0,5,0],"price":0,"wtypeId":2},
+{"id":3,"animationId":1,"description":"It's imbued in Gale's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":106,"name":"Gale Gloves","note":"<equipActor: 3 2>","params":[0,0,10,10,0,0,0,0],"price":0,"wtypeId":11},
+{"id":4,"animationId":16,"description":"It's imbued in Gale's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":105,"name":"Michelle Claws","note":"<equipActor: 4>","params":[0,0,15,5,0,0,0,0],"price":0,"wtypeId":10},
+{"id":5,"animationId":1,"description":"It's imbued in Albert's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":101,"name":"Albert Staff","note":"<equipActor: 5 3>","params":[0,0,5,0,13,5,0,0],"price":0,"wtypeId":6},
+{"id":6,"animationId":1,"description":"It's imbued in Kasey's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":101,"name":"Kasey Staff","note":"<equipActor: 6>","params":[0,0,2,0,18,3,0,0],"price":0,"wtypeId":6},
+{"id":7,"animationId":1,"description":"It's imbued in Elliot's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":98,"name":"Elliot Flail","note":"<equipActor: 7 4>","params":[0,0,11,2,2,2,0,0],"price":0,"wtypeId":3},
+{"id":8,"animationId":1,"description":"It's imbued in Roza's fighting spirit","etypeId":1,"traits":[{"code":31,"dataId":1,"value":0},{"code":22,"dataId":0,"value":0}],"iconIndex":98,"name":"Roza Flail","note":"<equipActor: 8>","params":[0,0,8,2,4,3,0,0],"price":0,"wtypeId":3}
+]
