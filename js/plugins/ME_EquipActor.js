@@ -1,7 +1,7 @@
 /*:
-* Version 0.9.2
-* @target RMMZ
-* Last update 22/08/20
+* Version 1.0.0
+* @target MZ
+* Last update 26/08/20
 * @author myenemy
 * @plugindesc This plugin allows you to equip items as party members
 * @help
@@ -75,10 +75,6 @@ Game_Actor.prototype.changeEquip = function(slot, id)
 			}
 			$gameParty.addActor(parseInt(match[1]));
 		}
-		else
-		{
-			$gameParty.addActor(parseInt(match));
-		}
 		saveTheOriginalChangeEquip.call(this,slot,id);
 	}
 
@@ -91,44 +87,3 @@ function isMatch(item)
 	else return null;
 }
 
-Window_EquipCommand.prototype.makeCommandList = function() { //Comment this to see the crash
-    this.addCommand(TextManager.equip2, "equip");
-};
-
-/*
-Game_Actor.prototype.optimizeEquipments = function() {
-	const maxSlots = this.equipSlots().length;
-	this.clearEquipments();
-	for (let i = 0; i < maxSlots; i++) {
-		if (this.isEquipChangeOk(i)) {
-			this.changeEquip(i, this.bestEquipItem(i)); //only line that makes the game flow on commented
-		}
-	}
-};
-
-Game_Actor.prototype.clearEquipments = function() {
-	const maxSlots = this.equipSlots().length;
-	for (let i = 0; i < maxSlots; i++) {
-		if (this.isEquipChangeOk(i)) {
-			this.changeEquip(i, null); //only line that makes the game flow on commented
-		}
-	}
-};
-
-
-Scene_Equip.prototype.commandOptimize = function() {
-	SoundManager.playEquip();
-	this.actor().optimizeEquipments();
-	this._statusWindow.refresh();
-	this._slotWindow.refresh();
-	this._commandWindow.activate();
-};
-
-Scene_Equip.prototype.commandClear = function() {
-	SoundManager.playEquip();
-	this.actor().clearEquipments();
-	this._statusWindow.refresh();
-	this._slotWindow.refresh();
-	this._commandWindow.activate();
-};
-*/
