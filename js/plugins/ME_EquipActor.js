@@ -1,5 +1,5 @@
 /*:
-* Version 1.0.2
+* Version 1.1.0
 * @target MZ
 * Last update 110/07/22
 * @author myenemy
@@ -34,47 +34,90 @@
  * @Terms of redistribution and disambiguation
  * - You must include a link to the original RPG Maker Forums Post plugin.
  * - You can add terms to it, but you can't remove or modify the ones already existent.
- * - You must follow LGPL 2.1.
- *
+ * - You must follow GPL 3.0.
+*
 ==============================================
 *
 *
 */
+var Imported = Imported || {};
+Imported.ME_EquipActor = "1.1.0";
 
-var ME_EA_changeEquip = Game_Actor.prototype.changeEquip;
+function ME_EquipActor() { };
+
+ME_EquipActor.changeEquip = Game_Actor.prototype.changeEquip;
+ME_EquipActor.learnSkill = Game_Actor.prototype.learnSkill;
+
 Game_Actor.prototype.changeEquip = function (slot, id) {
 	if (id) {
-		var match = isMatch(id);
-		if (match) {
-			if ($gameParty.members().contains($gameActors.actor(match[1])) && $gameActors.actor(match[1]) != this) {
-				if (match[2]) {
-					$gameSwitches.setValue(match[2], true);
-				}
-
-				$gameParty.removeActor(parseInt(match[1]));
-
-				ME_EA_changeEquip.call(this, slot, id);
-			}
-		}
-		else
-			ME_EA_changeEquip.call(this, slot, id);
+		ME_EquipActor.equipActor.call(this, slot, id);
 	}
 	else {
-		var match = isMatch(this.equips()[slot]);
-		if (Array.isArray(match)) {
-			if (match[2]) {
-				$gameSwitches.setValue(match[2], false);
-			}
-			$gameParty.addActor(parseInt(match[1]));
-		}
-		ME_EA_changeEquip.call(this, slot, id);
+		ME_EquipActor.unequipActor.call(this, slot, id);
 	}
 	$gamePlayer.refresh()
 }
 
-function isMatch(item) {
+ME_EquipActor.isMatch = function (item) {
 	if (item)
 		return item.note.match(/.*<equipactor:\s*([0-9]+)\s*([0-9]*)>.*/i);
 	else return null;
 }
+
+Game_Actor.prototype.learnSkill = function (skillId) {
+	ME_EquipActor.learnSkill.call(this, skillId)
+	if (this._naturalSkills) {
+		this._naturalSkills.push(skillId);
+	}
+	else {
+		this._naturalSkills = this._skills;
+	}
+};
+
+ME_EquipActor.equipActor = function (slot, id) {
+
+	var match = ME_EquipActor.isMatch(id);
+	if (match) {
+		if ($gameParty.members().contains($gameActors.actor(match[1])) && $gameActors.actor(match[1]) != this) {
+			if (match[2]) {
+				$gameSwitches.setValue(match[2], true);
+			}
+
+			$gameParty.removeActor(parseInt(match[1]));
+
+			ME_EquipActor.changeEquip.call(this, slot, id);
+		}
+	}
+	else
+		ME_EquipActor.changeEquip.call(this, slot, id);
+};
+
+ME_EquipActor.unequipActor = function (slot, id) {
+	var match = ME_EquipActor.isMatch(this.equips()[slot]);
+	if (Array.isArray(match)) {
+		if (match[2]) {
+			$gameSwitches.setValue(match[2], false);
+		}
+		$gameParty.addActor(parseInt(match[1]));
+
+	}
+	ME_EquipActor.changeEquip.call(this, slot, id);
+};
+
+ME_EquipActor.learnSkills = function (target, source) {
+	var targetActor = $gameActors.actor(target);
+	var sourceActor = $gameActors.actor(source);
+	
+
+}
+
+ME_EquipActor.learnSkill = function (actorId, skillId) {
+	if (!this.isLearnedSkill(skillId)) {
+		this._skills.push(skillId);
+		this._skills.sort((a, b) => a - b);
+	}
+}
+
+
+ME_EquipActor.forgetSkill = function () { }
 
