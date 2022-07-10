@@ -50,6 +50,7 @@ ME_EquipActor.learnSkill = Game_Actor.prototype.learnSkill;
 
 Game_Actor.prototype.changeEquip = function (slot, id) {
 	if (id) {
+		this.changeEquip(slot,0);
 		ME_EquipActor.equipActor.call(this, slot, id);
 	}
 	else {
@@ -103,21 +104,4 @@ ME_EquipActor.unequipActor = function (slot, id) {
 	}
 	ME_EquipActor.changeEquip.call(this, slot, id);
 };
-
-ME_EquipActor.learnSkills = function (target, source) {
-	var targetActor = $gameActors.actor(target);
-	var sourceActor = $gameActors.actor(source);
-	
-
-}
-
-ME_EquipActor.learnSkill = function (actorId, skillId) {
-	if (!this.isLearnedSkill(skillId)) {
-		this._skills.push(skillId);
-		this._skills.sort((a, b) => a - b);
-	}
-}
-
-
-ME_EquipActor.forgetSkill = function () { }
 
