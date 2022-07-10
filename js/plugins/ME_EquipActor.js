@@ -1,7 +1,7 @@
 /*:
-* Version 1.0.0
+* Version 1.0.2
 * @target MZ
-* Last update 26/08/20
+* Last update 110/07/22
 * @author myenemy
 * @plugindesc This plugin allows you to equip items as party members
 * @help
@@ -41,47 +41,38 @@
 *
 */
 
-var saveTheOriginalChangeEquip=Game_Actor.prototype.changeEquip;
-Game_Actor.prototype.changeEquip = function(slot, id)
-{
-	if (id)
-	{
-		var match=isMatch(id);
-		if (match)
-		{
-			if ($gameParty.members().contains($gameActors.actor(match[1]))&&$gameActors.actor(match[1])!=this)
-			{
-				if (match[2])
-				{
+var ME_EA_changeEquip = Game_Actor.prototype.changeEquip;
+Game_Actor.prototype.changeEquip = function (slot, id) {
+	if (id) {
+		var match = isMatch(id);
+		if (match) {
+			if ($gameParty.members().contains($gameActors.actor(match[1])) && $gameActors.actor(match[1]) != this) {
+				if (match[2]) {
 					$gameSwitches.setValue(match[2], true);
 				}
-				
+
 				$gameParty.removeActor(parseInt(match[1]));
-			
-				saveTheOriginalChangeEquip.call(this,slot,id);
+
+				ME_EA_changeEquip.call(this, slot, id);
 			}
 		}
 		else
-			saveTheOriginalChangeEquip.call(this,slot,id);
+			ME_EA_changeEquip.call(this, slot, id);
 	}
-	else
-	{
+	else {
 		var match = isMatch(this.equips()[slot]);
-		if (Array.isArray(match))
-		{
-			if (match[2])
-			{
+		if (Array.isArray(match)) {
+			if (match[2]) {
 				$gameSwitches.setValue(match[2], false);
 			}
 			$gameParty.addActor(parseInt(match[1]));
 		}
-		saveTheOriginalChangeEquip.call(this,slot,id);
+		ME_EA_changeEquip.call(this, slot, id);
 	}
+	$gamePlayer.refresh()
+}
 
-}	
-
-function isMatch(item)
-{
+function isMatch(item) {
 	if (item)
 		return item.note.match(/.*<equipactor:\s*([0-9]+)\s*([0-9]*)>.*/i);
 	else return null;
