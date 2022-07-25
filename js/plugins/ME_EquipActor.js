@@ -60,6 +60,7 @@ Game_Actor.prototype.changeEquip = function (slot, id) {
 };
 
 Game_Actor.prototype.inheritedSkillSet = null;
+Game_Actor.prototype._naturalSkills = null;
 
 ME_EquipActor.isMatch = function (item) {
 	if (item)
@@ -85,7 +86,7 @@ ME_EquipActor.inheritableSkills = function (actorId) {
 		var actor = $gameActors.actor(actorId);
 		var list = [];
 		for (var i = 0; i < inheritableSkills.length; i++) {
-			var aux=parseInt(inheritableSkills[i]);
+			var aux = parseInt(inheritableSkills[i]);
 			if (actor._skills.includes(aux)) {
 				list.push(aux);
 			}
@@ -113,7 +114,7 @@ ME_EquipActor.equipActor = function (slot, id) {
 			if (match[2]) {
 				$gameSwitches.setValue(match[2], true);
 			}
-			var actorId = parseInt(match[1])
+			var actorId = parseInt(match[1]);
 			$gameParty.removeActor(actorId);
 
 			ME_EquipActor.changeEquip.call(this, slot, id);
@@ -123,7 +124,24 @@ ME_EquipActor.equipActor = function (slot, id) {
 	else
 		ME_EquipActor.changeEquip.call(this, slot, id);
 };
-// Removes the actor. I have to add the remove skill functions
+ME_EquipActor.restoreSkills = function (slot) {
+	var skillsInnherited = this.inheritedSkillSet[slot];
+	this.inheritedSkillSet[slot] = this._naturalSkills;
+
+	for (var i = 0; i < skillsInnherited.length; i++) {
+		var deletable = true;
+		for (var j = 0; j < this.inheritedSkillSet.length && deletable; j++) {
+			if (this.inheritedSkillSet[j] && this.inheritedSkillSet[j].contains(skillsInnherited[i]))
+				deletable = false;
+		}
+		if (deletable) {
+			this._skills.remove(skillsInnherited[i])
+		}
+
+	}
+	this.inheritedSkillSet[slot] = null;
+}
+// Removes the actor
 ME_EquipActor.unequipActor = function (slot, id) {
 	var match = ME_EquipActor.isMatch(this.equips()[slot]);
 	if (Array.isArray(match)) {
@@ -131,14 +149,15 @@ ME_EquipActor.unequipActor = function (slot, id) {
 			$gameSwitches.setValue(match[2], false);
 		}
 		$gameParty.addActor(parseInt(match[1]));
+		ME_EquipActor.restoreSkills.call(this, slot)
 
 	}
 	ME_EquipActor.changeEquip.call(this, slot, id);
 };
-// Stores each bunch of inherited skills into an array into the target actor.
+// Manages skill inheriting
 ME_EquipActor.learnEquipedSkillset = function (actorId, slot) {
 	if (!this.inheritedSkillSet) {
-		this.inheritedSkillSet=[];
+		this.inheritedSkillSet = [];
 		for (var i = 0; i < this._equips.length; i++) {
 			this.inheritedSkillSet.push(null);
 		}
