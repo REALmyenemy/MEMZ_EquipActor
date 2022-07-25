@@ -1,19 +1,28 @@
 /*:
-* Version 1.1.0
 * @target MZ
-* Last update 110/07/22
+* Version 1.1.0
+* Last update 26/07/22
 * @author myenemy
 * @plugindesc This plugin allows you to equip items as party members
 * @help
-* Notetags:<equipActor: x> or <equipActor: x y>
-* It's quite a simple plugin type in the note box <equipActor: x y> where X is
-* the actor's id in the database, and Y an optional parameter to activate
-* the Y switch in case you want some control on who's equiped.
+* Type in the note box <equipActor: x y> where X is the actor's id in the database, and Y an optional
+* parameter to activate the Y switch in case you want some control over who's equiped.
 * Upon equiping, if actor X is in the party and it's not the one you want to
 * equip with this item, actor X will banish from party before equiping it to
 * another actor. Also, when you unequip this, the actor will join again as
 * soon as you unequip this item (and the switch will go off).
-* Warning: This plugin disables Optimize and Clear
+* Warning: This plugin disables Optimize. I cannot fix Optimize wrecking
+* havock to figure out what part to equip the best.
+* Notetags:
+* Equipables: <equipActor: x> or <equipActor: x y>
+* Actors: <equipactor_inheritableskills: a, b, c>
+* 
+* @Changelog
+* 0.9.1: Initial release, port from MV version, not stable.
+* 1.0.0: Actual proper release, stabilized for MZ.
+* 1.0.2: A small bugfix and a revamp of the code convention
+* 1.1.0: A BIG bugfix. Added inheritable skills
+*
 *
 ==============================================
  * @Terms of use
